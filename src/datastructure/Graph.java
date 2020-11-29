@@ -265,4 +265,9 @@ public class Graph<K extends Comparable<K>,V> implements IGraph<K,V>{
 		}
 		return minNode;
 	}
+	
+	public double[] kruskal() {
+		double[] prev = new double[size+1];
+		return null;
+	}
 }
