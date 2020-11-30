@@ -2,16 +2,17 @@ package datastructure;
 
 public class Edge {
 	
+	private int origin;
 	private int index;
 	private double weight;
 	
-	public Edge(int index) {
+	public Edge(int origin, int index) {
 		super();
 		this.index = index;
 		this.weight = 1;
 	}
 	
-	public Edge(int index, double weight) {
+	public Edge(int origin, int index, double weight) {
 		super();
 		this.index = index;
 		this.weight = weight;
@@ -26,5 +27,9 @@ public class Edge {
 	
 	public String toString() {
 		return index+"";
+	}
+
+	public int getOrigin() {
+		return origin;
 	}
 }

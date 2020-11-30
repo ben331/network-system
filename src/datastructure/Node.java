@@ -8,12 +8,14 @@ public class Node<K extends Comparable<K>,V> {
 	private K key;
 	private V value;
 	private ArrayList<Edge> adjacency;
+	private int pos;
 	
 	//Constructor
-	public Node(K key, V value, ArrayList<Edge> adjacency) {
+	public Node(K key, V value, int pos, ArrayList<Edge> adjacency) {
 		super();
 		this.key = key;
 		this.value = value;
+		this.pos = pos;
 		this.adjacency = adjacency == null ? new ArrayList<>() : adjacency;
 	}
 	
@@ -26,6 +28,10 @@ public class Node<K extends Comparable<K>,V> {
 	}
 	public V getValue() {
 		return value;
+	}
+	
+	public ArrayList<Edge> getEdges(){
+		return adjacency;
 	}
 	
 	public double getNeiborgWeight(int index) {
@@ -56,7 +62,11 @@ public class Node<K extends Comparable<K>,V> {
 	}
 	
 	public void addAdjacent(int index, double weight) {
-		adjacency.add(new Edge(index, weight));
+		adjacency.add(new Edge(pos, index, weight));
+	}
+	
+	public int getPos() {
+		return pos;
 	}
 	
 	public String toString() {
