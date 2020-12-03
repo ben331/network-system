@@ -212,8 +212,8 @@ public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 	}
 
 	@Override
-	public double prim() {
-		Double[] prev = new Double[size];
+	public GraphB<K,V> prim() {
+		int[] prev = new int[size];
 		Priority[] weights = new Priority[size];
 		Heap<Integer, Integer, Priority> priorityQ = new Heap<>(size);
 		boolean[] isVisited = new boolean[size];
@@ -221,7 +221,7 @@ public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 		for(int i=0; i<size; i++) {
 			Priority p = new Priority(Double.MAX_VALUE, i);
 			weights[i] = p;
-			prev[i] = new Double(-1);
+			prev[i] = -1;
 			priorityQ.insert(i, i, p);
 		}
 		
@@ -237,18 +237,41 @@ public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 			for(int i=0; i<currentNode.getAdjacents(); i++) {
 				if(!isVisited[currentIndex] && currentNode.getNeiborgWeight(i) < weights[currentIndex].getWeight()) {
 					weights[currentNode.getNeiborgIndex(i)].setWeight(currentNode.getNeiborgWeight(i));
-					prev[currentNode.getNeiborgIndex(i)] = (double) currentIndex;
+					prev[currentNode.getNeiborgIndex(i)] = currentIndex;
 					priorityQ.increaseKey(currentNode.getNeiborgIndex(i));
 				}
 			}
 			isVisited[currentIndex]=true;
 		}
 		
-		int travelWeight = 0;
-		for(int i=0; i<weights.length; i++) {
-			travelWeight+=weights[i].getWeight();
+		//Create graph
+		GraphB<K,V> minimalExpansion = new GraphB<>(type);
+		
+		minimalExpansion.setNodes(nodes);
+		
+		for(int i=0; i<prev.length; i++) {
+			double weight=Double.MAX_VALUE;
+			if(prev[i]!=-1) {
+				for(int j=0; j<nodes.get(i).getAdjacents(); j++) {
+					if(nodes.get(i).getNeiborgIndex(j)==prev[i]) {
+						weight = nodes.get(i).getNeiborgWeight(j);
+					}
+				}
+				minimalExpansion.getNodes().get(i).addAdjacent(prev[i], weight);
+				
+				if(type!=GraphB.SIMPLE_GRAPH && type!=GraphB.MULTIGRAPH) {
+					for(int j=0; j<nodes.get(prev[i]).getAdjacents(); j++) {
+						if(nodes.get(prev[i]).getNeiborgIndex(j)==i) {
+							weight = nodes.get(prev[i]).getNeiborgWeight(j);
+						}
+					}
+				}
+				
+				minimalExpansion.getNodes().get(prev[i]).addAdjacent(i, weight);
+			}
 		}
-		return travelWeight;
+		
+		return minimalExpansion;
 	}
 	
 	private int  getNodeWithMinEdge() {
@@ -266,7 +289,7 @@ public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 		return minNode;
 	}
 	
-	public GraphB<K,V> kruskal() throws Exception {
+	public GraphB<K,V> kruskal(){
 		//Result GraphB
 		GraphB<K,V> graph = new GraphB<>(this.type);
 		
@@ -330,6 +353,7 @@ public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 		if(node!=null) {
 			nodes.remove(node.getPos());
 		}
+		size--;
 	}
 
 	private Node<K,V> searchNode(K key) {
@@ -364,15 +388,16 @@ public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 					vertex.getEdges().remove(i);
 				}
 			}
-		}
-		
-		//If the graph is npot directed - remove the pair edge 
-		
-		if((type==GraphB.SIMPLE_GRAPH || type==GraphB.MULTIGRAPH) && indexAdyacent!=-1) {
-			vertex = nodes.get(indexAdyacent);
-			for(int i=0; i< vertex.getAdjacents();i++) {
-				if(nodes.get(vertex.getNeiborgIndex(i)).getKey().compareTo(keyVertex)==0) {				
-					vertex.getEdges().remove(i);
+			
+			
+			//If the graph is npot directed - remove the pair edge 
+			
+			if((type==GraphB.SIMPLE_GRAPH || type==GraphB.MULTIGRAPH) && indexAdyacent!=-1) {
+				vertex = nodes.get(indexAdyacent);
+				for(int i=0; i< vertex.getAdjacents();i++) {
+					if(nodes.get(vertex.getNeiborgIndex(i)).getKey().compareTo(keyVertex)==0) {				
+						vertex.getEdges().remove(i);
+					}
 				}
 			}
 		}

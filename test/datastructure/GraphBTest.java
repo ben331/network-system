@@ -79,7 +79,7 @@ class GraphBTest {
 		assertEquals(3, graph.getNodes().size());
 		
 		//Nodes
-		assertEquals(2, graph.getNodes().size());
+		assertEquals(3, graph.getNodes().size());
 		assertEquals(1, graph.getNodes().get(0).getKey());
 		assertEquals(2, graph.getNodes().get(1).getKey());
 		
@@ -88,6 +88,7 @@ class GraphBTest {
 		assertEquals(1, graph.getNodes().get(graph.getNodes().get(1).getNeiborgIndex(0)).getKey());
 	}
 	
+	@Test
 	void testRemoveVertex() {
 		setup2();
 		graph.removeVertex(3);
@@ -102,6 +103,7 @@ class GraphBTest {
 		assertEquals(1, graph.getNodes().get(graph.getNodes().get(1).getNeiborgIndex(0)).getKey());
 	}
 	
+	@Test
 	void testRemoveEdge() {
 		setup2();
 		graph.removeEdge(2, 3);
@@ -109,7 +111,7 @@ class GraphBTest {
 		assertEquals(3, graph.getNodes().size());
 		
 		//Nodes
-		assertEquals(2, graph.getNodes().size());
+		assertEquals(3, graph.getNodes().size());
 		assertEquals(1, graph.getNodes().get(0).getKey());
 		assertEquals(2, graph.getNodes().get(1).getKey());
 		
@@ -119,6 +121,7 @@ class GraphBTest {
 		assertEquals(1, graph.getNodes().get(graph.getNodes().get(2).getNeiborgIndex(0)).getKey());
 	}
 	
+	@Test
 	void testBFS() {
 		setup3();
 		
@@ -129,6 +132,7 @@ class GraphBTest {
 		}
 	}
 	
+	@Test
 	void testDFS() {
 		setup3();
 		
@@ -139,6 +143,7 @@ class GraphBTest {
 		}
 	}
 	
+	@Test
 	void testDijkstra() {
 		setup3();
 		
@@ -150,4 +155,63 @@ class GraphBTest {
 		assertEquals(3, route.pop());
 		assertEquals(5, route.pop());
 	}
+	
+	@Test
+	void testPrim() {
+		setup3();
+		
+		GraphB<Integer, String> minExpansion = graph.prim();
+		
+		for(int i=0; i<graph.getNodes().size(); i++) {
+			assertEquals(graph.getNodes().get(i).getKey() , minExpansion.getNodes().get(i).getKey(), "line"+i);
+		}
+		
+		Node<Integer,String> current = graph.getNodes().get(0);
+		assertEquals(2 , current.getNeiborgIndex(0));
+		
+		current = graph.getNodes().get(1);
+		assertEquals(1 , current.getNeiborgIndex(0));
+		assertEquals(3 , current.getNeiborgIndex(1));
+		
+		current = graph.getNodes().get(2);
+		assertEquals(2 , current.getNeiborgIndex(0));
+		assertEquals(4 , current.getNeiborgIndex(1));
+		assertEquals(5 , current.getNeiborgIndex(2));
+		
+		current = graph.getNodes().get(3);
+		assertEquals(3 , current.getNeiborgIndex(0));
+		
+		current = graph.getNodes().get(4);
+		assertEquals(3 , current.getNeiborgIndex(0));
+	}
+	
+	@Test
+	void testKruskal() {
+		setup3();
+		
+		GraphB<Integer, String> minExpansion = graph.kruskal();
+		
+		for(int i=0; i<graph.getNodes().size(); i++) {
+			assertEquals(graph.getNodes().get(i).getKey() , minExpansion.getNodes().get(i).getKey(), "line"+i);
+		}
+		
+		Node<Integer,String> current = graph.getNodes().get(0);
+		assertEquals(2 , current.getNeiborgIndex(0));
+		
+		current = graph.getNodes().get(1);
+		assertEquals(1 , current.getNeiborgIndex(0));
+		assertEquals(3 , current.getNeiborgIndex(1));
+		
+		current = graph.getNodes().get(2);
+		assertEquals(2 , current.getNeiborgIndex(0));
+		assertEquals(4 , current.getNeiborgIndex(1));
+		assertEquals(5 , current.getNeiborgIndex(2));
+		
+		current = graph.getNodes().get(3);
+		assertEquals(3 , current.getNeiborgIndex(0));
+		
+		current = graph.getNodes().get(4);
+		assertEquals(3 , current.getNeiborgIndex(0));
+	}
+	
 }
