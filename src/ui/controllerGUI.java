@@ -7,10 +7,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 
 public class ControllerGUI {
@@ -185,6 +187,15 @@ public class ControllerGUI {
 
     @FXML
     private TextField txtMinimunPing;
+    
+    @FXML
+    private RadioButton rdbGraphA;
+
+    @FXML
+    private ToggleGroup graph;
+
+    @FXML
+    private RadioButton rdbGraphB;
 
     @FXML
     void calculateMinimunLatency(ActionEvent event) {
