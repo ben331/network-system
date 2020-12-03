@@ -8,12 +8,20 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 	
 	private ArrayList<Node<K,V>> nodes;
 
-	private int matrix[][];
+	private ArrayList<Edge> horizontal;
 
 	public GraphA() {
 
+		horizontal = new ArrayList<>();
 
 	}
+	
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public ArrayList<Node<K, V>> BFS() {
