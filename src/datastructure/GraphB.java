@@ -49,7 +49,7 @@ public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 	//Analyzers
 	
 	@Override
-	public void addNode(K key, V value) {
+	public void add(K key, V value) {
 		Node<K,V> newNode = new Node<>(key, value, nodes.size(), null);
 		nodes.add(newNode);
 		size++;
@@ -302,14 +302,14 @@ public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 				//Adding nodes to a new GraphB
 				Node<K,V> node = nodes.get(current.getOrigin());
 				if(!wasAdded[current.getOrigin()]) {
-					graph.addNode(node.getKey(), nodes.get(current.getOrigin()).getValue());
+					graph.add(node.getKey(), nodes.get(current.getOrigin()).getValue());
 					newPos[current.getOrigin()] = graph.size -1;
 					wasAdded[current.getOrigin()]=true;
 				}
 				
 				node = nodes.get(current.getIndex());
 				if(!wasAdded[current.getIndex()]) {
-					graph.addNode(node.getKey(), nodes.get(current.getOrigin()).getValue());
+					graph.add(node.getKey(), nodes.get(current.getOrigin()).getValue());
 					newPos[current.getOrigin()] = graph.size -1;
 					wasAdded[current.getIndex()] = true; 
 				}
@@ -325,14 +325,68 @@ public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 	}
 
 	@Override
-	public void remove(K key) {
-		// TODO Auto-generated method stub
-		
+	public void removeVertex(K key) {
+		Node<K,V> node = searchNode(key);
+		if(node!=null) {
+			nodes.remove(node.getPos());
+		}
+	}
+
+	private Node<K,V> searchNode(K key) {
+		Node<K,V> node = null;
+		for(int i=0; i<nodes.size();i++) {
+			if(nodes.get(i).getKey().compareTo(key)==0) {
+				node = nodes.get(i);
+			}
+		}
+		return node;
+	}
+	
+	@Override
+	public V search(K key) {
+		Node<K,V> node = searchNode(key);
+		if(node!=null) {
+			return node.getValue();
+		}else {
+			return null;
+		}
 	}
 
 	@Override
-	public void searchNode(K key) {
-		// TODO Auto-generated method stub
+	public void removeEdge(K keyVertex, K keyAdyacent) {
+		Node<K,V> vertex = searchNode(keyVertex);
+		int indexAdyacent=-1;
 		
+		if(vertex!=null) {
+			for(int i=0; i< vertex.getAdjacents();i++) {
+				if(nodes.get(vertex.getNeiborgIndex(i)).getKey().compareTo(keyAdyacent)==0) {				
+					indexAdyacent = vertex.getNeiborgIndex(i);
+					vertex.getEdges().remove(i);
+				}
+			}
+		}
+		
+		//If the graph is npot directed - remove the pair edge 
+		
+		if((type==GraphB.SIMPLE_GRAPH || type==GraphB.MULTIGRAPH) && indexAdyacent!=-1) {
+			vertex = nodes.get(indexAdyacent);
+			for(int i=0; i< vertex.getAdjacents();i++) {
+				if(nodes.get(vertex.getNeiborgIndex(i)).getKey().compareTo(keyVertex)==0) {				
+					vertex.getEdges().remove(i);
+				}
+			}
+		}
+	}
+	
+	public Stack<K> buildRoute(Double[] prevs, K key){
+		Stack<K> route = new Stack<>();
+		
+		int pos = searchNode(key).getPos();
+		int prev = prevs[pos].intValue();
+		while(prev!=-1) {
+			route.add(nodes.get(prev).getKey());
+		}
+		
+		return route;
 	}
 }

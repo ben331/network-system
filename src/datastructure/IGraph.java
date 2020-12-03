@@ -9,8 +9,9 @@ public interface IGraph<K extends Comparable<K>,V> {
 	public double[][] floydWarshall();
 	public ArrayList<Double[]> dijkstra(K principalKey);
 	public double prim();
-	public void addNode(K key, V value);
-	public void remove(K key);
-	public void searchNode(K key);
+	public void add(K key, V value);
+	public void removeVertex(K key);
+	public void removeEdge(K keyVertex, K keyAdyacent);
+	public V search(K key);
 	
 }
