@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-public class Graph<K extends Comparable<K>,V> implements IGraph<K,V>{
+public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 	
 	//Constants
 	public static final char SIMPLE_GRAPH ='S';
@@ -20,7 +20,7 @@ public class Graph<K extends Comparable<K>,V> implements IGraph<K,V>{
 	private ArrayList<Node<K,V>> nodes;
 
 	//Contructor
-	public Graph(char type) {
+	public GraphB(char type) {
 		nodes = new ArrayList<Node<K,V>>();
 		this.type=type;
 	}
@@ -49,8 +49,8 @@ public class Graph<K extends Comparable<K>,V> implements IGraph<K,V>{
 	//Analyzers
 	
 	@Override
-	public void add(K key, V value, ArrayList<Edge> adjacency) {
-		Node<K,V> newNode = new Node<>(key, value, nodes.size(), adjacency);
+	public void add(K key, V value) {
+		Node<K,V> newNode = new Node<>(key, value, nodes.size(), null);
 		nodes.add(newNode);
 		size++;
 	}
@@ -266,9 +266,9 @@ public class Graph<K extends Comparable<K>,V> implements IGraph<K,V>{
 		return minNode;
 	}
 	
-	public Graph<K,V> kruskal() throws Exception {
-		//Result Graph
-		Graph<K,V> graph = new Graph<>(this.type);
+	public GraphB<K,V> kruskal() throws Exception {
+		//Result GraphB
+		GraphB<K,V> graph = new GraphB<>(this.type);
 		
 		//PriorityQueue of edges
 		int amountEdges=0;
@@ -299,28 +299,94 @@ public class Graph<K extends Comparable<K>,V> implements IGraph<K,V>{
 			if(set1!=set2) {
 				componentsGraph.union(set1, set2);
 				
-				//Adding nodes to a new Graph
+				//Adding nodes to a new GraphB
 				Node<K,V> node = nodes.get(current.getOrigin());
 				if(!wasAdded[current.getOrigin()]) {
-					graph.add(node.getKey(), nodes.get(current.getOrigin()).getValue(), null);
+					graph.add(node.getKey(), nodes.get(current.getOrigin()).getValue());
 					newPos[current.getOrigin()] = graph.size -1;
 					wasAdded[current.getOrigin()]=true;
 				}
 				
 				node = nodes.get(current.getIndex());
 				if(!wasAdded[current.getIndex()]) {
-					graph.add(node.getKey(), nodes.get(current.getOrigin()).getValue(), null);
+					graph.add(node.getKey(), nodes.get(current.getOrigin()).getValue());
 					newPos[current.getOrigin()] = graph.size -1;
 					wasAdded[current.getIndex()] = true; 
 				}
 				
 				graph.nodes.get(newPos[current.getOrigin()]).addAdjacent(newPos[current.getIndex()], current.getWeight());
-				if(this.type==Graph.SIMPLE_GRAPH) {
+				if(this.type==GraphB.SIMPLE_GRAPH) {
 					graph.nodes.get(newPos[current.getIndex()]).addAdjacent(newPos[current.getOrigin()], current.getWeight());
 				}
 			}
 		}
 		
 		return graph;
+	}
+
+	@Override
+	public void removeVertex(K key) {
+		Node<K,V> node = searchNode(key);
+		if(node!=null) {
+			nodes.remove(node.getPos());
+		}
+	}
+
+	private Node<K,V> searchNode(K key) {
+		Node<K,V> node = null;
+		for(int i=0; i<nodes.size();i++) {
+			if(nodes.get(i).getKey().compareTo(key)==0) {
+				node = nodes.get(i);
+			}
+		}
+		return node;
+	}
+	
+	@Override
+	public V search(K key) {
+		Node<K,V> node = searchNode(key);
+		if(node!=null) {
+			return node.getValue();
+		}else {
+			return null;
+		}
+	}
+
+	@Override
+	public void removeEdge(K keyVertex, K keyAdyacent) {
+		Node<K,V> vertex = searchNode(keyVertex);
+		int indexAdyacent=-1;
+		
+		if(vertex!=null) {
+			for(int i=0; i< vertex.getAdjacents();i++) {
+				if(nodes.get(vertex.getNeiborgIndex(i)).getKey().compareTo(keyAdyacent)==0) {				
+					indexAdyacent = vertex.getNeiborgIndex(i);
+					vertex.getEdges().remove(i);
+				}
+			}
+		}
+		
+		//If the graph is npot directed - remove the pair edge 
+		
+		if((type==GraphB.SIMPLE_GRAPH || type==GraphB.MULTIGRAPH) && indexAdyacent!=-1) {
+			vertex = nodes.get(indexAdyacent);
+			for(int i=0; i< vertex.getAdjacents();i++) {
+				if(nodes.get(vertex.getNeiborgIndex(i)).getKey().compareTo(keyVertex)==0) {				
+					vertex.getEdges().remove(i);
+				}
+			}
+		}
+	}
+	
+	public Stack<K> buildRoute(Double[] prevs, K key){
+		Stack<K> route = new Stack<>();
+		
+		int pos = searchNode(key).getPos();
+		int prev = prevs[pos].intValue();
+		while(prev!=-1) {
+			route.add(nodes.get(prev).getKey());
+		}
+		
+		return route;
 	}
 }

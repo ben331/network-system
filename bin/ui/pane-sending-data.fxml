@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="558.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Line endX="29.0" endY="-20.0" layoutX="176.0" layoutY="93.0" startX="29.0" startY="124.0" />
+      <Line endX="-150.0" endY="124.0" layoutX="186.0" layoutY="103.0" startX="194.0" startY="124.0" />
+      <TextField fx:id="txtSerialDeviceA" layoutX="36.0" layoutY="108.0" prefHeight="20.0" prefWidth="148.0" promptText="serial number" />
+      <TextField fx:id="txtSerialDeviceB" layoutX="225.0" layoutY="108.0" prefHeight="20.0" prefWidth="148.0" promptText="serial number" />
+      <Label layoutX="36.0" layoutY="83.0" text="Device A" />
+      <Label layoutX="225.0" layoutY="83.0" prefHeight="17.0" prefWidth="53.0" text="Device B" />
+      <Label layoutX="36.0" layoutY="145.0" text="Office:" />
+      <Label layoutX="38.0" layoutY="184.0" text="Floor:" />
+      <Label layoutX="225.0" layoutY="145.0" text="Office:" />
+      <Label layoutX="225.0" layoutY="184.0" text="Office:" />
+      <Label fx:id="labOfficeA" layoutX="82.0" layoutY="137.0" prefHeight="25.0" prefWidth="97.0" />
+      <Label fx:id="labFloorA" layoutX="87.0" layoutY="176.0" prefHeight="33.0" prefWidth="46.0" />
+      <Label fx:id="labOfficeB" layoutX="267.0" layoutY="137.0" prefHeight="25.0" prefWidth="97.0" />
+      <Label fx:id="labFloorB" layoutX="267.0" layoutY="176.0" prefHeight="33.0" prefWidth="46.0" />
+      <TextArea fx:id="txtAreaRoute" editable="false" layoutX="36.0" layoutY="313.0" prefHeight="114.0" prefWidth="345.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextArea>
+      <Label layoutX="36.0" layoutY="285.0" text="Route:" />
+      <Label layoutX="36.0" layoutY="451.0" prefHeight="17.0" prefWidth="34.0" text="Ping:" />
+      <TextField fx:id="txtMinimunPing" editable="false" layoutX="82.0" layoutY="447.0" />
+      <Button layoutX="122.0" layoutY="248.0" mnemonicParsing="false" onAction="#calculateMinimunLatency" text="Calaculate minimun latency" />
+      <Label layoutX="36.0" layoutY="48.0" text="Graph:" />
+      <RadioButton fx:id="rdbGraphA" layoutX="90.0" layoutY="48.0" mnemonicParsing="false" selected="true" text="Graph A list">
+         <toggleGroup>
+            <ToggleGroup fx:id="graph" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rdbGraphB" layoutX="228.0" layoutY="48.0" mnemonicParsing="false" text="Graph B Matrix" toggleGroup="$graph" />
+   </children>
+</Pane>

@@ -1,7 +1,5 @@
 package datastructure;
 
-
-import java.lang.RuntimeException;
 import java.util.ArrayList;
 
 public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
@@ -42,7 +40,7 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 	}
 
 	@Override
-	public void add(K key, V value, ArrayList<Edge> adjacency) {
+	public void addNode(K key, V value) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -57,6 +55,26 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 	public double prim() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	/*
+	@Override
+	public void addNode(K key, V value) {
+		// TODO Auto-generated method stub
+		
+	}
+	*/
+
+	@Override
+	public void remove(K key) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void searchNode(K key) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
