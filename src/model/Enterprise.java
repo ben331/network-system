@@ -42,14 +42,18 @@ public class Enterprise {
 	}
 	
 	public void minimunPath(String serialNumber1, String serialNumber2,char type) {
-		
+		if(type==ADYACENT_LIST) {
+			 graphB.dijkstra(serialNumber1);
+		}else if(type==MATRIX_LIST) {
+			 graphA.dijkstra(serialNumber1);
+		}
 	}
 	
 	public void prim(char type) {
 		if(type==ADYACENT_LIST) {
-			 graphA.prim();
-		}else if(type==MATRIX_LIST) {
 			 graphB.prim();
+		}else if(type==MATRIX_LIST) {
+			 graphA.prim();
 		}
 	}
 }
