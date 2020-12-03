@@ -10,5 +10,8 @@ public interface IGraph<K extends Comparable<K>,V> {
 	public void add(K key, V value, ArrayList<Edge> adjacency);
 	public ArrayList<Double[]> dijkstra(K principalKey);
 	public double prim();
+	public void addNode(K key, V value);
+	public void remove(K key);
+	public void searchNode(K key);
 	
 }

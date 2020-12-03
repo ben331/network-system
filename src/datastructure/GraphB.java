@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-public class Graph<K extends Comparable<K>,V> implements IGraph<K,V>{
+public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 	
 	//Constants
 	public static final char SIMPLE_GRAPH ='S';
@@ -20,7 +20,7 @@ public class Graph<K extends Comparable<K>,V> implements IGraph<K,V>{
 	private ArrayList<Node<K,V>> nodes;
 
 	//Contructor
-	public Graph(char type) {
+	public GraphB(char type) {
 		nodes = new ArrayList<Node<K,V>>();
 		this.type=type;
 	}
@@ -266,9 +266,9 @@ public class Graph<K extends Comparable<K>,V> implements IGraph<K,V>{
 		return minNode;
 	}
 	
-	public Graph<K,V> kruskal() throws Exception {
-		//Result Graph
-		Graph<K,V> graph = new Graph<>(this.type);
+	public GraphB<K,V> kruskal() throws Exception {
+		//Result GraphB
+		GraphB<K,V> graph = new GraphB<>(this.type);
 		
 		//PriorityQueue of edges
 		int amountEdges=0;
@@ -299,7 +299,7 @@ public class Graph<K extends Comparable<K>,V> implements IGraph<K,V>{
 			if(set1!=set2) {
 				componentsGraph.union(set1, set2);
 				
-				//Adding nodes to a new Graph
+				//Adding nodes to a new GraphB
 				Node<K,V> node = nodes.get(current.getOrigin());
 				if(!wasAdded[current.getOrigin()]) {
 					graph.add(node.getKey(), nodes.get(current.getOrigin()).getValue(), null);
@@ -315,12 +315,30 @@ public class Graph<K extends Comparable<K>,V> implements IGraph<K,V>{
 				}
 				
 				graph.nodes.get(newPos[current.getOrigin()]).addAdjacent(newPos[current.getIndex()], current.getWeight());
-				if(this.type==Graph.SIMPLE_GRAPH) {
+				if(this.type==GraphB.SIMPLE_GRAPH) {
 					graph.nodes.get(newPos[current.getIndex()]).addAdjacent(newPos[current.getOrigin()], current.getWeight());
 				}
 			}
 		}
 		
 		return graph;
+	}
+
+	@Override
+	public void addNode(K key, V value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void remove(K key) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void searchNode(K key) {
+		// TODO Auto-generated method stub
+		
 	}
 }
