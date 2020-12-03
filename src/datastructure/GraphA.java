@@ -13,13 +13,6 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 		horizontal = new ArrayList<>();
 
 	}
-	
-	
-	
-	
-	
-	
-	
 
 	@Override
 	public ArrayList<Node<K, V>> BFS() {
@@ -40,12 +33,6 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 	}
 
 	@Override
-	public void addNode(K key, V value) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public ArrayList<Double[]> dijkstra(K principalKey) {
 		// TODO Auto-generated method stub
 		return null;
@@ -57,27 +44,28 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 		return 0;
 	}
 
-	/*
 	@Override
-	public void addNode(K key, V value) {
-		// TODO Auto-generated method stub
-		
-	}
-	*/
-
-	@Override
-	public void remove(K key) {
+	public void add(K key, V value) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void searchNode(K key) {
+	public void removeVertex(K key) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void removeEdge(K keyVertex, K keyAdyacent) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public V search(K key) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
-	
-
-
 }
