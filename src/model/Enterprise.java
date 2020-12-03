@@ -1,15 +1,15 @@
 package model;
 
-import datastructure.Graph;
 import datastructure.GraphA;
+import datastructure.GraphB;
 
 public class Enterprise {
 	
 	public static char ADYACENT_LIST='L';
 	public static char MATRIX_LIST = 'M';
 	
-	private Graph<String,Computer> graph;
-	private GraphA  graphA;
+	private GraphB<String,Computer> graphB;
+	private GraphA<String,Computer>  graphA;
 	
 	public Enterprise() {}
 	
