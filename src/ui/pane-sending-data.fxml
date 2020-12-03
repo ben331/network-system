@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="558.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Line endX="29.0" endY="-20.0" layoutX="175.0" layoutY="59.0" startX="29.0" startY="124.0" />
+      <Line endX="-150.0" endY="124.0" layoutX="185.0" layoutY="69.0" startX="194.0" startY="124.0" />
+      <TextField fx:id="txtSerialDeviceA" layoutX="35.0" layoutY="74.0" prefHeight="20.0" prefWidth="148.0" promptText="serial number" />
+      <TextField fx:id="txtSerialDeviceB" layoutX="224.0" layoutY="74.0" prefHeight="20.0" prefWidth="148.0" promptText="serial number" />
+      <Label layoutX="35.0" layoutY="49.0" text="Device A" />
+      <Label layoutX="224.0" layoutY="49.0" prefHeight="17.0" prefWidth="53.0" text="Device B" />
+      <Label layoutX="35.0" layoutY="111.0" text="Office:" />
+      <Label layoutX="37.0" layoutY="150.0" text="Floor:" />
+      <Label layoutX="224.0" layoutY="111.0" text="Office:" />
+      <Label layoutX="224.0" layoutY="150.0" text="Office:" />
+      <Label fx:id="labOfficeA" layoutX="81.0" layoutY="103.0" prefHeight="25.0" prefWidth="97.0" />
+      <Label fx:id="labFloorA" layoutX="86.0" layoutY="142.0" prefHeight="33.0" prefWidth="46.0" />
+      <Label fx:id="labOfficeB" layoutX="266.0" layoutY="103.0" prefHeight="25.0" prefWidth="97.0" />
+      <Label fx:id="labFloorB" layoutX="266.0" layoutY="142.0" prefHeight="33.0" prefWidth="46.0" />
+      <TextArea fx:id="txtAreaRoute" editable="false" layoutX="35.0" layoutY="279.0" prefHeight="114.0" prefWidth="345.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextArea>
+      <Label layoutX="35.0" layoutY="251.0" text="Route:" />
+      <Label layoutX="35.0" layoutY="417.0" prefHeight="17.0" prefWidth="34.0" text="Ping:" />
+      <TextField fx:id="txtMinimunPing" editable="false" layoutX="81.0" layoutY="413.0" />
+      <Button layoutX="121.0" layoutY="214.0" mnemonicParsing="false" onAction="#calculateMinimunLatency" text="Calaculate minimun latency" />
+   </children>
+</Pane>
