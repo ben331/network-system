@@ -39,9 +39,9 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 	}
 
 	@Override
-	public double prim() {
+	public GraphA<K,V> prim() {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
@@ -64,6 +64,12 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 
 	@Override
 	public V search(K key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IGraph<K, V> kruskal() {
 		// TODO Auto-generated method stub
 		return null;
 	}
