@@ -16,6 +16,7 @@ public class Enterprise {
 	private GraphB<String,Computer> graphB;
 	private GraphA<String,Computer>  graphA;
 	private Node<String, Computer> computerSelected;
+	private double pingFounded;
 	
 	public Enterprise() {
 		graphB = new GraphB<>(GraphB.SIMPLE_GRAPH);
@@ -65,11 +66,13 @@ public class Enterprise {
 		
 		if(type==ADYACENT_LIST) {
 			
-			 Double[] prevs = graphB.dijkstra(serialNumber1).get(1);
-			 Stack<String> stack = graphB.buildRoute(prevs, serialNumber2);
+			 ArrayList<Double[]> result = graphB.dijkstra(serialNumber1);
+			 Stack<String> stack = graphB.buildRoute(result.get(1), serialNumber2);
 			 while(!stack.isEmpty()) {
 				 route.add(stack.pop());
 			 }
+			 Node<String,Computer> node = graphB.searchNode(serialNumber2);
+			 pingFounded = result.get(0)[node.getPos()];
 		}else if(type==MATRIX_LIST) {
 			// graphA.dijkstra(serialNumber1);
 		}
@@ -100,5 +103,9 @@ public class Enterprise {
 			return new ArrayList<>();
 		}
 		
+	}
+
+	public double getPingFounded() {
+		return pingFounded;
 	}
 }

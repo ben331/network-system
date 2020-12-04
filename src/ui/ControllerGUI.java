@@ -281,7 +281,7 @@ public class ControllerGUI {
     
     public void initializeTableComputers() {
     	ObservableList<Computer> computers = FXCollections.observableArrayList(enterprise.getComputersList());
-    	tableAllDevices1.setItems(computers);
+    	tableAllDevices2.setItems(computers);
     	columnSerials3.setCellValueFactory(new PropertyValueFactory<String,Computer>("serialNumber"));
     	columnOffice.setCellValueFactory(new PropertyValueFactory<String,Computer>("office"));
     	columnFloor.setCellValueFactory(new PropertyValueFactory<Integer,Computer>("floor"));
@@ -331,6 +331,38 @@ public class ControllerGUI {
 
     @FXML
     void calculateMinimunLatency(ActionEvent event) {
-
+    	try {
+		
+    		char type = rdbGraphB.isSelected() ? Enterprise.ADYACENT_LIST : Enterprise.MATRIX_LIST;
+    		
+    		String serial1 = txtSerialDeviceA.getText();
+    		String serial2 = txtSerialDeviceB.getText();
+    		
+    		Computer computerA = enterprise.searchComputer(serial1);
+    		Computer computerB = enterprise.searchComputer(serial2);
+    		
+    		labOfficeA.setText(computerA.getOffice());
+    		labOfficeB.setText(computerB.getOffice());
+    		labFloorA.setText(computerA.getFloor()+"");
+    		labFloorB.setText(computerB.getFloor()+"");
+    		
+    		
+    		ArrayList<String> serialsPath = enterprise.minimunPath(serial1, serial2, type);
+    		
+    		txtAreaRoute.setText("The data are sended following the next path: \n");
+    		
+    		for(int i=0; i<serialsPath.size();i++) {
+    			txtAreaRoute.setText(txtAreaRoute.getText() + "\n"+ serialsPath.get(i));
+    		}
+    		
+    		txtMinimunPing.setText(enterprise.getPingFounded()+" ms");
+    		
+    	}catch(Exception e) {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error");
+    		alert.setContentText(e.getMessage());
+    		alert.showAndWait();
+    	}
+    	
     }
 }
