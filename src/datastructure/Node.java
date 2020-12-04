@@ -58,11 +58,11 @@ public class Node<K extends Comparable<K>,V> {
 	}
 	
 	public void addAdjacent(int index) {
-		adjacency.add(new Edge(index, 1));
+		adjacency.add(new Edge(index, 1, key.toString()));
 	}
 	
 	public void addAdjacent(int index, double weight) {
-		adjacency.add(new Edge(pos, index, weight));
+		adjacency.add(new Edge(pos, index, weight, key.toString()));
 	}
 	
 	public int getPos() {

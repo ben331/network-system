@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import datastructure.Edge;
+import datastructure.Node;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -86,6 +88,8 @@ public class ControllerGUI {
 		loader.setController(this);
 		Parent parent = loader.load();
 		functionPane.setCenter(parent);
+		enterprise.deselectComputer();
+		initializeTableComputers();
     }
     
     //Pane to add-----------------------------------------------------------------------------------------------------------------------
@@ -133,10 +137,12 @@ public class ControllerGUI {
     			throw new Exception("This computer does not exist: "+serialNumber);
     		}
     		
-    		adyacents.add(new Edge(serialNumber, ping));
+    		adyacents.add(new Edge(0, 0, ping, serialNumber));
     		
     		refreshTableAdyacents();
     		
+    		txtSerialAdyacent.setText("");
+    		txtPing.setText("");
     	}catch(NumberFormatException e) {
     		txtPing.setText("");
     		Alert alert = new Alert(AlertType.ERROR);
@@ -144,7 +150,7 @@ public class ControllerGUI {
     		alert.setContentText("Please, type the ping in milliseconds");
     		alert.showAndWait();
     	} catch (Exception e) {
-    		txtSerialAdyacent.getText();
+    		txtSerialAdyacent.setText("");
     		txtPing.setText("");
     		Alert alert = new Alert(AlertType.ERROR);
     		alert.setTitle("Error");
@@ -210,28 +216,28 @@ public class ControllerGUI {
     //Pane to search---------------------------------------------------------------------------------------------------------------------
     
     @FXML
-    private TableView<?> tableAllDevices2;
+    private TableView<Computer> tableAllDevices2;
 
     @FXML
-    private TableColumn<?, ?> columnSerials3;
+    private TableColumn<String, Computer> columnSerials3;
 
     @FXML
-    private TableColumn<?, ?> columnOffice;
+    private TableColumn<String, Computer> columnOffice;
 
     @FXML
-    private TableColumn<?, ?> columnFloor;
+    private TableColumn<Integer, Computer> columnFloor;
 
     @FXML
     private TextField txtSearch;
 
     @FXML
-    private TableView<?> tableAllDevices21;
+    private TableView<Edge> tableAdyacents2;
 
     @FXML
-    private TableColumn<?, ?> columnSerials31;
+    private TableColumn<String, Edge> columnSerialsAdy;
 
     @FXML
-    private TableColumn<?, ?> columnFloor1;
+    private TableColumn<Double, Edge> columnPing2;
 
     @FXML
     private Label labSerial;
@@ -244,7 +250,48 @@ public class ControllerGUI {
 
     @FXML
     void removeDevice(ActionEvent event) {
-
+    	Alert alert = new Alert(AlertType.CONFIRMATION, "Do you really want to remove this computer?", ButtonType.YES, ButtonType.NO);
+		alert.setTitle("Alert");
+		
+        ButtonType result = alert.showAndWait().orElse(ButtonType.NO);
+        
+        if (ButtonType.YES.equals(result)) {
+        	enterprise.removeComputer(enterprise.getComputerSelected().getKey());
+        	labSerial.setText("");
+    		labOffice.setText("");
+    		labFloor.setText("");
+    		txtSearch.setText("");
+    		initializeTableAdyacents();
+    		initializeTableComputers();
+        }
+    }
+    
+    @FXML
+    void searchComputer(ActionEvent event) {
+    	enterprise.searchComputer(txtSearch.getText());
+    	Node<String, Computer> computer = enterprise.getComputerSelected();
+    	if(computer!=null) {
+    		labSerial.setText(computer.getValue().getSerialNumber());
+    		labOffice.setText(computer.getValue().getOffice());
+    		labFloor.setText(computer.getValue().getFloor()+"");
+    		txtSearch.setText("");
+    		initializeTableAdyacents();
+    	}
+    }
+    
+    public void initializeTableComputers() {
+    	ObservableList<Computer> computers = FXCollections.observableArrayList(enterprise.getComputersList());
+    	tableAllDevices1.setItems(computers);
+    	columnSerials3.setCellValueFactory(new PropertyValueFactory<String,Computer>("serialNumber"));
+    	columnOffice.setCellValueFactory(new PropertyValueFactory<String,Computer>("office"));
+    	columnFloor.setCellValueFactory(new PropertyValueFactory<Integer,Computer>("floor"));
+    }
+    
+    public void initializeTableAdyacents() {
+    	ObservableList<Edge> edges = FXCollections.observableArrayList(enterprise.getComputersAdyacents());
+    	tableAdyacents2.setItems(edges);
+    	columnSerialsAdy.setCellValueFactory(new PropertyValueFactory<String,Edge>("indexS"));
+    	columnPing2.setCellValueFactory(new PropertyValueFactory<Double,Edge>("weight"));
     }
     
     //Sending Data

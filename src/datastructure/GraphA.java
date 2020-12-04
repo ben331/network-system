@@ -16,8 +16,6 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 		nodes = new ArrayList<>();
 	}
 
-	
-
 	public void addNode(K key, V value, int pos) {
 		
 		ArrayList<Edge> adjacency = null;
@@ -25,7 +23,7 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 		nodes.add(newNode);
 		
 		ArrayList<Edge> newVertical = new ArrayList<>();
-		Edge edgePeronal = new Edge(nodes.size(), nodes.size());
+		Edge edgePeronal = new Edge(nodes.size(), nodes.size(), "");
 		Edge edgeNull = null;
 		
 		for (int i = 0; i < nodes.size(); i++) {
@@ -54,14 +52,13 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 		int edNum2 = positionSearch(key2);
 		
 		if(!(edNum1 == -1 || edNum2 ==-1)) {
-			Edge edge1 = new Edge(edNum2, edNum1, weight);
-			Edge edge2 = new Edge(edNum1, edNum2, weight);
+			Edge edge1 = new Edge(edNum2, edNum1, weight, "");
+			Edge edge2 = new Edge(edNum1, edNum2, weight, "");
 			
 			horizontal.get(edNum1).set(edNum2, edge1);
 			horizontal.get(edNum2).set(edNum1, edge2);
 		}
 	}
-
 
 	@Override
 	public ArrayList<Node<K, V>> BFS() {
@@ -120,6 +117,7 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 		return null;
 	}
 
+
 	@Override
 	public GraphA<K,V> prim() {
 		// TODO Auto-generated method stub
@@ -131,7 +129,8 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	@Override
 
 	public void removeVertex(K key) {
 		// TODO Auto-generated method stub
@@ -141,11 +140,11 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 	@Override
 	public void removeEdge(K keyVertex, K keyAdyacent) {
 
-		// TODO Auto-generated method stub
-		
 	}
 
+	
 	@Override
+
 	public V search(K key) {
 
 		V valorReturn = null;
@@ -170,6 +169,7 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 		}
 		
 		return valorReturn;
+
 	}
 
 
@@ -177,7 +177,6 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 	public IGraph<K, V> kruskal() {
 		// TODO Auto-generated method stub
 		return null;
-
 	}
 	
 }

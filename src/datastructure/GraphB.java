@@ -380,7 +380,7 @@ public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 		size--;
 	}
 
-	private Node<K,V> searchNode(K key) {
+	public Node<K,V> searchNode(K key) {
 		Node<K,V> node = null;
 		for(int i=0; i<nodes.size();i++) {
 			if(nodes.get(i).getKey().compareTo(key)==0) {

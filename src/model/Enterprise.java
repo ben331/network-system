@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import datastructure.Edge;
 import datastructure.GraphA;
 import datastructure.GraphB;
 import datastructure.Node;
@@ -14,13 +15,20 @@ public class Enterprise {
 	
 	private GraphB<String,Computer> graphB;
 	private GraphA<String,Computer>  graphA;
-	private Computer computerSelectedA;
-	private Computer computerSelectedB;
+	private Node<String, Computer> computerSelected;
 	
 	public Enterprise() {
 		graphB = new GraphB<>(GraphB.SIMPLE_GRAPH);
 		graphA = new GraphA<>();
 		
+	}
+	
+	public Node<String, Computer> getComputerSelected(){
+		return computerSelected;
+	}
+	
+	public void deselectComputer() {
+		computerSelected=null;
 	}
 	
 	public void addComputer(String serialNumber, String office, int floor) {
@@ -48,9 +56,8 @@ public class Enterprise {
 	}
 	
 	public Computer searchComputer(String serialNumber) {
-		computerSelectedA = graphB.search(serialNumber);
-		computerSelectedB = graphB.search(serialNumber);
-		return computerSelectedB;
+		computerSelected = graphB.searchNode(serialNumber);
+		return computerSelected.getValue();
 	}
 	
 	public ArrayList<String> minimunPath(String serialNumber1, String serialNumber2,char type) {
@@ -84,5 +91,14 @@ public class Enterprise {
 			computers.add(graphB.getNodes().get(i).getValue());
 		}
 		return computers;
+	}
+
+	public ArrayList<Edge> getComputersAdyacents() {
+		if(computerSelected!=null) {
+			return computerSelected.getEdges();
+		}else {
+			return new ArrayList<>();
+		}
+		
 	}
 }

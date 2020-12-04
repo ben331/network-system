@@ -7,21 +7,21 @@ public class Edge {
 	private double weight;
 	private String indexS;
 	
-	public Edge(String indexS, double weight) {
-		this.setIndexS(indexS);
-		this.weight = weight;
-	}
 	
-	public Edge(int origin, int index) {
+	public Edge(int origin, int index, String indexS) {
 		super();
+		this.origin = origin;
 		this.index = index;
 		this.weight = 1;
+		this.indexS=indexS;
 	}
 	
-	public Edge(int origin, int index, double weight) {
+	public Edge(int origin, int index, double weight, String indexS) {
 		super();
+		this.origin = origin;
 		this.index = index;
 		this.weight = weight;
+		this.indexS=indexS;
 	}
 	
 	public int getIndex() {
