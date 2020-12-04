@@ -1,7 +1,11 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 import datastructure.GraphA;
 import datastructure.GraphB;
+import datastructure.Node;
 
 public class Enterprise {
 	
@@ -10,10 +14,13 @@ public class Enterprise {
 	
 	private GraphB<String,Computer> graphB;
 	private GraphA<String,Computer>  graphA;
+	private Computer computerSelectedA;
+	private Computer computerSelectedB;
 	
 	public Enterprise() {
-		graphB = new GraphB(GraphB.SIMPLE_GRAPH);
-		graphA = new GraphA();		
+		graphB = new GraphB<>(GraphB.SIMPLE_GRAPH);
+		graphA = new GraphA<>();
+		
 	}
 	
 	public void addComputer(String serialNumber, String office, int floor) {
@@ -22,8 +29,12 @@ public class Enterprise {
 		graphA.add(serialNumber, c);
 	}
 	
-	public void addConection(String serialNumber1, String serialNumber2) {
-	
+	public void addConection(String serialNumber1, String serialNumber2, double ping) {
+		
+		//NodeA
+		
+		//NodeB
+		graphB.addEdge(serialNumber1, serialNumber2, ping);
 	}
 	
 	public void removeComputer(String serialNumber) {
@@ -36,17 +47,27 @@ public class Enterprise {
 		graphA.removeEdge(serialNumber1, serialNumber2);
 	}
 	
-	public void searchComputer(String serialNumber) {
-		graphB.search(serialNumber);
-		graphA.search(serialNumber);
+	public Computer searchComputer(String serialNumber) {
+		computerSelectedA = graphB.search(serialNumber);
+		computerSelectedB = graphB.search(serialNumber);
+		return computerSelectedB;
 	}
 	
-	public void minimunPath(String serialNumber1, String serialNumber2,char type) {
+	public ArrayList<String> minimunPath(String serialNumber1, String serialNumber2,char type) {
+		ArrayList<String> route = new ArrayList<>(); 
+		
 		if(type==ADYACENT_LIST) {
-			 graphB.dijkstra(serialNumber1);
+			
+			 Double[] prevs = graphB.dijkstra(serialNumber1).get(1);
+			 Stack<String> stack = graphB.buildRoute(prevs, serialNumber2);
+			 while(!stack.isEmpty()) {
+				 route.add(stack.pop());
+			 }
 		}else if(type==MATRIX_LIST) {
-			 graphA.dijkstra(serialNumber1);
+			// graphA.dijkstra(serialNumber1);
 		}
+		
+		return route;
 	}
 	
 	public void prim(char type) {

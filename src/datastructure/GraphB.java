@@ -55,6 +55,30 @@ public class GraphB<K extends Comparable<K>,V> implements IGraph<K,V>{
 		size++;
 	}
 	
+	public void addEdge(Node<K,V> origin, K adyacent, double weight) {
+		
+		int indexOrigin = origin.getPos();
+		int index = searchNode(adyacent).getPos();
+		
+		nodes.get(indexOrigin).addAdjacent(index, weight);
+		
+		if(type==GraphB.SIMPLE_GRAPH || type==GraphB.MULTIGRAPH) {
+			nodes.get(index).addAdjacent(indexOrigin, weight);
+		}
+	}
+	
+	public void addEdge(K origin, K adyacent, double weight) {
+		
+		int indexOrigin = searchNode(origin).getPos();
+		int index = searchNode(adyacent).getPos();
+		
+		nodes.get(indexOrigin).addAdjacent(index, weight);
+		
+		if(type==GraphB.SIMPLE_GRAPH || type==GraphB.MULTIGRAPH) {
+			nodes.get(index).addAdjacent(indexOrigin, weight);
+		}
+	}
+	
 	@Override
 	public ArrayList<Node<K,V>> BFS() {
 		Queue<Integer> queue = new LinkedList<Integer>();
