@@ -11,3 +11,6 @@ Tech Spec
 lenguaje: java 8
 SO: Windows
 develop environment: Eclipse 
+
+docs: https://github.com/ben331/network-system/tree/develop/docs
+video: https://drive.google.com/drive/folders/1Bv_ZQkGZxkNPJtxmnN3imeffJ4a7DXcy?usp=sharing
