@@ -50,7 +50,6 @@ public class ControllerGUI {
 		loader.setController(this);
 		Parent parent = loader.load();
 		mainPane.setCenter(parent);
-		initializeTable1();
     }
 
     @FXML
@@ -78,6 +77,7 @@ public class ControllerGUI {
 		functionPane.setCenter(parent);
 		
 		adyacents = new ArrayList<>();
+		initializeTable1();
     }
 
     @FXML
@@ -134,6 +134,8 @@ public class ControllerGUI {
     		}
     		
     		adyacents.add(new Edge(serialNumber, ping));
+    		
+    		refreshTableAdyacents();
     		
     	}catch(NumberFormatException e) {
     		txtPing.setText("");
