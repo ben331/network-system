@@ -15,6 +15,7 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 		horizontal = new ArrayList<>();
 		nodes = new ArrayList<>();
 	}
+
 	
 
 	public void addNode(K key, V value, int pos) {
@@ -60,6 +61,7 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 			horizontal.get(edNum2).set(edNum1, edge2);
 		}
 	}
+
 
 	@Override
 	public ArrayList<Node<K, V>> BFS() {
@@ -112,8 +114,6 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 		return null;
 	}
 
-
-
 	@Override
 	public ArrayList<Double[]> dijkstra(K principalKey) {
 		// TODO Auto-generated method stub
@@ -121,9 +121,9 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 	}
 
 	@Override
-	public double prim() {
+	public GraphA<K,V> prim() {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
@@ -133,17 +133,18 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 	}
 
 
-
-	@Override
 	public void removeVertex(K key) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
 	public void removeEdge(K keyVertex, K keyAdyacent) {
+
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
 	public V search(K key) {
 
@@ -169,7 +170,14 @@ public class GraphA <K extends Comparable<K>,V> implements IGraph<K,V> {
 		}
 		
 		return valorReturn;
-		
+	}
+
+
+	@Override
+	public IGraph<K, V> kruskal() {
+		// TODO Auto-generated method stub
+		return null;
+
 	}
 	
 }
