@@ -77,4 +77,12 @@ public class Enterprise {
 			 graphA.prim();
 		}
 	}
+	
+	public ArrayList<Computer> getComputersList(){
+		ArrayList<Computer> computers = new ArrayList<>();
+		for(int i=0; i<graphB.getNodes().size(); i++) {
+			computers.add(graphB.getNodes().get(i).getValue());
+		}
+		return computers;
+	}
 }

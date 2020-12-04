@@ -3,6 +3,9 @@ package ui;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import datastructure.Edge;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +19,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import model.*;
 
@@ -46,6 +50,7 @@ public class ControllerGUI {
 		loader.setController(this);
 		Parent parent = loader.load();
 		mainPane.setCenter(parent);
+		initializeTable1();
     }
 
     @FXML
@@ -73,7 +78,6 @@ public class ControllerGUI {
 		functionPane.setCenter(parent);
 		
 		adyacents = new ArrayList<>();
-		pings = new ArrayList<>();
     }
 
     @FXML
@@ -96,13 +100,13 @@ public class ControllerGUI {
     private TextField txtSerialDevice;
 
     @FXML
-    private TableView<Computer> tableAdyacents;
+    private TableView<Edge> tableAdyacents;
 
     @FXML
-    private TableColumn<String, Computer> columnSerials2;
-
+    private TableColumn<String, Edge> columnSerials2;
+    
     @FXML
-    private TableColumn<Double, Computer> columnPing;
+    private TableColumn<Double, Edge> columnPing;
 
     @FXML
     private TextField txtSerialAdyacent;
@@ -116,8 +120,7 @@ public class ControllerGUI {
     @FXML
     private TableColumn<String, Computer> columnSerials1;
     
-    private ArrayList<String> adyacents;
-    private ArrayList<Double> pings;
+    private ArrayList<Edge> adyacents;
 
     @FXML
     void addAdyacent(ActionEvent event) {
@@ -129,8 +132,8 @@ public class ControllerGUI {
     		if(enterprise.searchComputer(serialNumber)==null) {
     			throw new Exception("This computer does not exist: "+serialNumber);
     		}
-    		adyacents.add(serialNumber);
-    		pings.add(ping);
+    		
+    		adyacents.add(new Edge(serialNumber, ping));
     		
     	}catch(NumberFormatException e) {
     		txtPing.setText("");
@@ -168,7 +171,7 @@ public class ControllerGUI {
     		enterprise.addComputer(serialNumber, office, floor);
     		
     		for(int i=0; i<adyacents.size(); i++) {
-    			enterprise.addConection(serialNumber, adyacents.get(i), pings.get(i));
+    			enterprise.addConection(serialNumber, adyacents.get(i).getIndexS(), adyacents.get(i).getWeight());
     		}
     		
     		Alert alert = new Alert(AlertType.INFORMATION);
@@ -187,6 +190,19 @@ public class ControllerGUI {
     		alert.setContentText(e.getMessage());
     		alert.showAndWait();
     	}
+    }
+    
+    public void initializeTable1() {
+    	ObservableList<Computer> computers = FXCollections.observableArrayList(enterprise.getComputersList());
+    	tableAllDevices1.setItems(computers);
+    	columnSerials1.setCellValueFactory(new PropertyValueFactory<String,Computer>("serialNumber"));
+    }
+    
+    public void refreshTableAdyacents() {
+    	ObservableList<Edge> edges = FXCollections.observableArrayList(adyacents);
+    	tableAdyacents.setItems(edges);
+    	columnSerials2.setCellValueFactory(new PropertyValueFactory<String,Edge>("indexS"));
+    	columnPing.setCellValueFactory(new PropertyValueFactory<Double,Edge>("weight"));
     }
     
     //Pane to search---------------------------------------------------------------------------------------------------------------------

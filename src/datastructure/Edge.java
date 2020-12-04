@@ -5,6 +5,12 @@ public class Edge {
 	private int origin;
 	private int index;
 	private double weight;
+	private String indexS;
+	
+	public Edge(String indexS, double weight) {
+		this.setIndexS(indexS);
+		this.weight = weight;
+	}
 	
 	public Edge(int origin, int index) {
 		super();
@@ -31,5 +37,13 @@ public class Edge {
 
 	public int getOrigin() {
 		return origin;
+	}
+
+	public String getIndexS() {
+		return indexS;
+	}
+
+	public void setIndexS(String indexS) {
+		this.indexS = indexS;
 	}
 }
